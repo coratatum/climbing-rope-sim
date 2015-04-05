@@ -2,6 +2,7 @@
 #include <iostream>
 #include <Pitch.h>
 
+
 /*
 float fallFactor(float d, float L){
     return (2*d)/L;
@@ -46,6 +47,10 @@ Matrix calcStrain(){
 
 
 int main(){
-    std::cout << "hello world";
+    std::cout << "hello" << " " << "world" <<'\n';
+    std::cout << "line 2" << '\n';
+    Pitch p = Pitch();
+   // std::cout << std::fixed << std::setprecision(2) << 4.00 << '\n';
+    std::cout << p.getRopeLength() << '\n';
     return 0;
 }

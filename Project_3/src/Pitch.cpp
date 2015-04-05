@@ -14,6 +14,8 @@
 Pitch::Pitch()
 {
     //ctor
+    //Pitch::pitchGeometry = {{1,2},{1,2}};
+    Pitch::L = 4;
 }
 
 Pitch::~Pitch()
@@ -21,19 +23,26 @@ Pitch::~Pitch()
     //dtor
 }
 
-Pitch::getPitchGeometry()
+std::vector<std::tuple<float>> Pitch::getPitchGeometry()
 {
     //return pitch geo
+    return Pitch::pitchGeometry;
 }
 
-Pitch::getRopeSegments()
+std::vector<float> Pitch::getRopeSegments()
 {
     //return a vector of rope segment lengths
 }
 
-Pitch::getRopeSegmentAngles()
+std::vector<float> Pitch::getRopeSegmentAngles()
 {
     //get the angles
+}
+
+float Pitch::getRopeLength()
+{
+    //calculate from the pitch geometry
+    return Pitch::L;
 }
 
 
