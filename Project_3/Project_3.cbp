@@ -44,7 +44,9 @@
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="include/Pitch.h" />
+		<Unit filename="include/SimFunctions.h" />
 		<Unit filename="src/Pitch.cpp" />
+		<Unit filename="src/SimFunctions.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

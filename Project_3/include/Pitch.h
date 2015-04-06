@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <tuple>
+
+using namespace std;
 /**
 Holds all the info a climbing pitch might have
 Most of the user input data is here
@@ -14,9 +16,9 @@ class Pitch
     public:
         Pitch();
         virtual ~Pitch();
-        virtual std::vector<std::tuple<float,float>> getPitchGeometry();
-        virtual std::vector<float> getRopeSegments();
-        virtual std::vector<float> getRopeSegmentAngles();
+        virtual vector<tuple<float,float>> getPitchGeometry();
+        virtual vector<float> getRopeSegments();
+        virtual vector<float> getRopeSegmentAngles();
         virtual float getRopeLength();
 
     protected:
@@ -28,15 +30,15 @@ class Pitch
         float k1; //
         float k2; //
         float lambda; //
-        std::vector<std::tuple<float,float>> pitchGeometry;
+        vector<tuple<float,float>> pitchGeometry;
         //calculated from various other givens:
 
         float L; //total length of rope
         float d; //vert dist above last runner
 
-        std::vector<float> tensionRatios;
-        std::vector<float> lapAngles;
-        std::vector<int> slipConditions;
+        vector<float> tensionRatios;
+        vector<float> lapAngles;
+        vector<int> slipConditions;
 
 };
 
