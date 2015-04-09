@@ -19,7 +19,13 @@ class Pitch
         virtual vector<tuple<float,float>> getPitchGeometry();
         virtual vector<float> getRopeSegments();
         virtual vector<float> getRopeSegmentAngles();
-        virtual float getRopeLength();
+        virtual float calcRopeLength();
+        //new, implement
+        virtual float getd();
+        virtual float getk();
+        virtual float getM();
+        virtual float getL();
+
 
     protected:
     private:

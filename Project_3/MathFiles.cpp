@@ -54,6 +54,6 @@ int main(){
     std::cout << "line 2" << '\n';
     Pitch p = Pitch();
    // std::cout << std::fixed << std::setprecision(2) << 4.00 << '\n';
-    std::cout << p.getRopeLength() << '\n';
+    std::cout << p.calcRopeLength() << '\n';
     return 0;
 }

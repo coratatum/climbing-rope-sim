@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1428201891 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\mathfiles.cpp
+1428598497 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\mathfiles.cpp
 	<Eigen/Core>
 	<iostream>
 	<Pitch.h>
@@ -405,10 +405,11 @@
 
 1427987591 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\eigen2support\mathfunctions.h
 
-1428206805 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
+1428593244 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
 	<vector>
 	<tuple>
 
-1428206472 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
+1428598581 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
 	"Pitch.h"
+	<math.h>
 
