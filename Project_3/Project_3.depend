@@ -405,11 +405,18 @@
 
 1427987591 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\eigen2support\mathfunctions.h
 
-1428593244 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
+1428602299 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
 	<vector>
 	<tuple>
 
-1428598581 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
+1428602420 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
 	"Pitch.h"
 	<math.h>
+
+1428598645 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\simfunctions.cpp
+	"SimFunctions.h"
+	<math.h>
+
+1428264699 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\simfunctions.h
+	<Pitch.h>
 

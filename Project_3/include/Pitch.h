@@ -26,6 +26,9 @@ class Pitch
         virtual float getM();
         virtual float getL();
 
+        virtual float lawOfCosines(tuple<float,float> p1, tuple<float,float> p2, tuple<float,float> p3);
+        virtual float distanceFormula(tuple<float,float> p1, tuple<float,float> p2);
+
 
     protected:
     private:
@@ -45,6 +48,8 @@ class Pitch
         vector<float> tensionRatios;
         vector<float> lapAngles;
         vector<int> slipConditions;
+
+
 
 };
 

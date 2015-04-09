@@ -1,52 +1,13 @@
 #include <Eigen/Core>
 #include <iostream>
 #include <Pitch.h>
+#include <math.h>
+
+#define PI 3.14159265
 
 /**
 Testing 1,2,3
 */
-
-/*
-float fallFactor(float d, float L){
-    return (2*d)/L;
-}
-
-float baseTension(float F, float k, float M){
-    float g = 9.80665; //gravity, m/s^2
-    return sqrt(2*k*F*M*g);
-}
-
-array getSegmentLengths(std::array<> carabiners){
-    //get dist b/w each pair of coords
-    //put each Len in a matrix
-
-    //do a similar process to get the angle between each segment
-}
-
-array angles(){
-
-}
-
-float maxTensionRatio(){
-
-}
-
-float getAngle(){
-    //get angle between two things
-    //input two lines??
-    //4 points eh??
-
-}
-
-Matrix getIncrementalTenstion(){
-
-}
-
-Matrix calcStrain(){
-    vector dS = -L(T+dT)/(LKC);
-}
-*/
-
 
 
 int main(){
@@ -55,5 +16,10 @@ int main(){
     Pitch p = Pitch();
    // std::cout << std::fixed << std::setprecision(2) << 4.00 << '\n';
     std::cout << p.calcRopeLength() << '\n';
+    tuple<float,float> p1{0,0};
+    tuple<float,float> p2{0,1};
+    tuple<float,float> p3{0,2};
+    std::cout<<p.lawOfCosines(p1,p2,p3)<<'\n';
+    //std::cout<<(PI/2) << '\n';
     return 0;
 }

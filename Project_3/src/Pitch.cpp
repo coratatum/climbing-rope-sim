@@ -49,9 +49,12 @@ vector<float> Pitch::getRopeSegments()
     std::vector<tuple<float,float>>::iterator it;
 
     for(it = pitchGeometry.begin(); it != pitchGeometry.end(); ++it){
+        /*
         float x = std::get<0>(*it) - std::get<0>(prev);
         float y = std::get<1>(*it) - std::get<1>(prev);
         float l = sqrt(x*x + y*y);
+        */
+        float l = distanceFormula(prev, *it);
         lengths.push_back(l);
         prev = *it; //reassign prev to curr coords for next iteration
     }
@@ -88,5 +91,29 @@ float Pitch::getL()
 float Pitch::getM()
 {
     return M;
+}
+
+
+/*
+Private helper functions
+*/
+
+float Pitch::distanceFormula(tuple<float,float> p1, tuple<float,float> p2)
+{
+    float a = std::get<0>(p2) - std::get<0>(p1);
+    float b = std::get<1>(p2) - std::get<1>(p1);
+    float d = sqrt(a*a + b*b);
+    return d;
+}
+
+float Pitch::lawOfCosines(tuple<float,float> p1, tuple<float,float> p2, tuple<float,float> p3)
+{
+    float a = distanceFormula(p2,p3);
+    float b = distanceFormula(p1,p2);
+    float c = distanceFormula(p1,p3);
+
+    float numerator = (a*a) + (b*b) - (c*c);
+    float denominator = 2*a*b;
+    return acos(numerator/denominator);
 }
 
