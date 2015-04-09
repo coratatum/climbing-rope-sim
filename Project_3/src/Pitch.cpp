@@ -1,4 +1,5 @@
 #include "Pitch.h"
+#include <Eigen/Core>
 
 #include <math.h>
 
@@ -20,10 +21,10 @@ Pitch::Pitch()
     //get the length of the live rope from the geometry
     //once this works, move and use to make the segment list
     //then sum the segment list to get the length
-    float l = 0;
-    tuple<float,float> prev;
-    tuple<float,float> curr;
-    vector<tuple<float,float>>::iterator it = pitchGeometry.begin();
+    double l = 0;
+    tuple<double,double> prev;
+    tuple<double,double> curr;
+    vector<tuple<double,double>>::iterator it = pitchGeometry.begin();
     for(it; it != pitchGeometry.end(); ++it){
            l += get<0>((*it));
     }
@@ -35,60 +36,66 @@ Pitch::~Pitch()
     //dtor
 }
 
-vector<tuple<float,float>> Pitch::getPitchGeometry()
+vector<tuple<double,double>> Pitch::getPitchGeometry()
 {
     //return pitch geo
     return Pitch::pitchGeometry;
 }
 
-vector<float> Pitch::getRopeSegments()
+vector<double> Pitch::getRopeSegments()
 {
-    vector<float> lengths;
+    vector<double> lengths;
     //return a vector of rope segment lengths
-    tuple<float,float> prev {0,0}; //start at origin
-    std::vector<tuple<float,float>>::iterator it;
+    tuple<double,double> prev {0,0}; //start at origin
+    std::vector<tuple<double,double>>::iterator it;
 
     for(it = pitchGeometry.begin(); it != pitchGeometry.end(); ++it){
         /*
-        float x = std::get<0>(*it) - std::get<0>(prev);
-        float y = std::get<1>(*it) - std::get<1>(prev);
-        float l = sqrt(x*x + y*y);
+        double x = std::get<0>(*it) - std::get<0>(prev);
+        double y = std::get<1>(*it) - std::get<1>(prev);
+        double l = sqrt(x*x + y*y);
         */
-        float l = distanceFormula(prev, *it);
+        double l = distanceFormula(prev, *it);
         lengths.push_back(l);
         prev = *it; //reassign prev to curr coords for next iteration
     }
 }
 
-vector<float> Pitch::getRopeSegmentAngles()
+vector<double> Pitch::getRopeSegmentAngles()
 {
     //get the angles
     //given 3 points, or two segments, get the angle between them
 }
 
-float Pitch::calcRopeLength()
+Eigen::VectorXd Pitch::calcLapAngles()
 {
-    float len = 0;
+    //get the angles
+    //given 3 points, or two segments, get the angle between them
+}
+
+double Pitch::calcRopeLength()
+{
+    double len = 0;
     //calculate from the pitch geometry
     return len;
 }
 
-float Pitch::getd()
+double Pitch::getd()
 {
     return d;
 }
 
-float Pitch::getk()
+double Pitch::getk()
 {
     return k;
 }
 
-float Pitch::getL()
+double Pitch::getL()
 {
     return L;
 }
 
-float Pitch::getM()
+double Pitch::getM()
 {
     return M;
 }
@@ -98,22 +105,22 @@ float Pitch::getM()
 Private helper functions
 */
 
-float Pitch::distanceFormula(tuple<float,float> p1, tuple<float,float> p2)
+double Pitch::distanceFormula(tuple<double,double> p1, tuple<double,double> p2)
 {
-    float a = std::get<0>(p2) - std::get<0>(p1);
-    float b = std::get<1>(p2) - std::get<1>(p1);
-    float d = sqrt(a*a + b*b);
+    double a = std::get<0>(p2) - std::get<0>(p1);
+    double b = std::get<1>(p2) - std::get<1>(p1);
+    double d = sqrt(a*a + b*b);
     return d;
 }
 
-float Pitch::lawOfCosines(tuple<float,float> p1, tuple<float,float> p2, tuple<float,float> p3)
+double Pitch::lawOfCosines(tuple<double,double> p1, tuple<double,double> p2, tuple<double,double> p3)
 {
-    float a = distanceFormula(p2,p3);
-    float b = distanceFormula(p1,p2);
-    float c = distanceFormula(p1,p3);
+    double a = distanceFormula(p2,p3);
+    double b = distanceFormula(p1,p2);
+    double c = distanceFormula(p1,p3);
 
-    float numerator = (a*a) + (b*b) - (c*c);
-    float denominator = 2*a*b;
+    double numerator = (a*a) + (b*b) - (c*c);
+    double denominator = 2*a*b;
     return acos(numerator/denominator);
 }
 

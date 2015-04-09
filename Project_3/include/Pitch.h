@@ -16,37 +16,37 @@ class Pitch
     public:
         Pitch();
         virtual ~Pitch();
-        virtual vector<tuple<float,float>> getPitchGeometry();
-        virtual vector<float> getRopeSegments();
-        virtual vector<float> getRopeSegmentAngles();
-        virtual float calcRopeLength();
+        virtual vector<tuple<double,double>> getPitchGeometry();
+        virtual vector<double> getRopeSegments();
+        virtual vector<double> getRopeSegmentAngles();
+        virtual double calcRopeLength();
         //new, implement
-        virtual float getd();
-        virtual float getk();
-        virtual float getM();
-        virtual float getL();
+        virtual double getd();
+        virtual double getk();
+        virtual double getM();
+        virtual double getL();
 
-        virtual float lawOfCosines(tuple<float,float> p1, tuple<float,float> p2, tuple<float,float> p3);
-        virtual float distanceFormula(tuple<float,float> p1, tuple<float,float> p2);
+        virtual double lawOfCosines(tuple<double,double> p1, tuple<double,double> p2, tuple<double,double> p3);
+        virtual double distanceFormula(tuple<double,double> p1, tuple<double,double> p2);
 
 
     protected:
     private:
-        float M; //mass of leader
-        float k; //
-        float r; //runner radius
+        double M; //mass of leader
+        double k; //
+        double r; //runner radius
 
-        float k1; //
-        float k2; //
-        float lambda; //
-        vector<tuple<float,float>> pitchGeometry;
+        double k1; //
+        double k2; //
+        double lambda; //
+        vector<tuple<double,double>> pitchGeometry;
         //calculated from various other givens:
 
-        float L; //total length of rope
-        float d; //vert dist above last runner
+        double L; //total length of rope
+        double d; //vert dist above last runner
 
-        vector<float> tensionRatios;
-        vector<float> lapAngles;
+        vector<double> tensionRatios;
+        vector<double> lapAngles;
         vector<int> slipConditions;
 
 
