@@ -32,5 +32,25 @@ double SimFunctions::baseTension(Pitch& p)
     return sqrt(2*p.getk()*fallFactor(p)*p.getM()*g);
 }
 
+Eigen::VectorXd calcTensionRatios(Pitch& p)
+{
+
+}
+
+Eigen::VectorXd calcIncrementalSlips(Pitch& p)
+{
+
+}
+
+Eigen::VectorXd calcIncrementalStrains(Pitch& p)
+{
+
+}
+
+Eigen::MatrixXd createC()
+{
+
+}
+
 
 

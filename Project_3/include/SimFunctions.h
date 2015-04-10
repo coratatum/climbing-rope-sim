@@ -2,6 +2,7 @@
 #define SIMFUNCTIONS_H
 
 #include <Pitch.h>
+#include <Eigen/Core>
 
 
 /**
@@ -19,10 +20,23 @@ class SimFunctions
         virtual double baseTension(Pitch& p);
        // virtual Matrix incrementalSlips(Pitch &p);
         virtual double delS(double t, double v);
+        virtual Eigen::VectorXd calcTensionRatios(Pitch& p);
+        virtual Eigen::VectorXd calcIncrementalSlips(Pitch& p);
+        virtual Eigen::VectorXd calcIncrementalStrains(Pitch& p);
+        virtual Eigen::MatrixXd createC();
+
+        //private??
+        virtual double calcCEntry();
+
     protected:
     private:
        // Pitch p; //have a pitch in the thing??
        double tInc; //how much to increase time at each time step
+       Eigen::VectorXd tensionRatios;
+       Eigen::VectorXd sIncs;
+       Eigen::VectorXd eIncs;
+       Eigen::MatrixXd C;
+
 
 };
 

@@ -22,6 +22,9 @@ class Pitch
         //virtual vector<double> getRopeSegmentAngles();
         virtual double calcRopeLength();
         virtual Eigen::VectorXd calcLapAngles();
+        //uhmmmmm
+        virtual Eigen::VectorXd calcFrictionCoeffs();
+
         //new, implement
         virtual double getd();
         virtual double getk();
