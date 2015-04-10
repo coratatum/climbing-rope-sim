@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <tuple>
+#include <Eigen/Core>
 
 using namespace std;
 /**
@@ -18,8 +19,9 @@ class Pitch
         virtual ~Pitch();
         virtual vector<tuple<double,double>> getPitchGeometry();
         virtual vector<double> getRopeSegments();
-        virtual vector<double> getRopeSegmentAngles();
+        //virtual vector<double> getRopeSegmentAngles();
         virtual double calcRopeLength();
+        virtual Eigen::VectorXd calcLapAngles();
         //new, implement
         virtual double getd();
         virtual double getk();
@@ -48,6 +50,8 @@ class Pitch
         vector<double> tensionRatios;
         vector<double> lapAngles;
         vector<int> slipConditions;
+
+        //int numCarabiners; //number of carabiners (size of several arrays)
 
 
 

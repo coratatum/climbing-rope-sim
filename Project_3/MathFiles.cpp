@@ -15,7 +15,7 @@ int main(){
     std::cout << "line 2" << '\n';
     Pitch p = Pitch();
    // std::cout << std::fixed << std::setprecision(2) << 4.00 << '\n';
-    std::cout << p.calcRopeLength() << '\n';
+    std::cout << p.getL() << '\n';
     tuple<float,float> p1{0,0};
     tuple<float,float> p2{0,1};
     tuple<float,float> p3{0,2};

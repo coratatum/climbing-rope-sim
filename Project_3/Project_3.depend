@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1428598497 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\mathfiles.cpp
+1428683215 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\mathfiles.cpp
 	<Eigen/Core>
 	<iostream>
 	<Pitch.h>
+	<math.h>
 
 1427987587 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\core
 	"src/Core/util/DisableStupidWarnings.h"
@@ -405,18 +406,20 @@
 
 1427987591 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\eigen2support\mathfunctions.h
 
-1428602299 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
+1428682151 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
 	<vector>
 	<tuple>
+	<Eigen/Core>
 
-1428602420 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
+1428681981 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
 	"Pitch.h"
+	<Eigen/Core>
 	<math.h>
 
-1428598645 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\simfunctions.cpp
+1428619371 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\simfunctions.cpp
 	"SimFunctions.h"
 	<math.h>
 
-1428264699 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\simfunctions.h
+1428619369 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\simfunctions.h
 	<Pitch.h>
 

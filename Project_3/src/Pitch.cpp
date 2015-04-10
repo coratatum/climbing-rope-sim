@@ -3,6 +3,8 @@
 
 #include <math.h>
 
+#define PI 3.14159265
+
 //has a matrix of carabiner spots
 //has a k constant for rope
 //has crit val for belay slip
@@ -16,19 +18,16 @@ Pitch::Pitch()
     //ctor
     //Pitch::pitchGeometry = {{1,2},{1,2}};
     //Pitch::L = 4;
-    pitchGeometry.push_back(make_tuple(1,2));
+    pitchGeometry.push_back(make_tuple(0,2));
+    pitchGeometry.push_back(make_tuple(0,4));
 
     //get the length of the live rope from the geometry
     //once this works, move and use to make the segment list
     //then sum the segment list to get the length
-    double l = 0;
+    /*double l = 0;
     tuple<double,double> prev;
-    tuple<double,double> curr;
-    vector<tuple<double,double>>::iterator it = pitchGeometry.begin();
-    for(it; it != pitchGeometry.end(); ++it){
-           l += get<0>((*it));
-    }
-    L = l;
+    tuple<double,double> curr;*/
+    L = calcRopeLength();
 }
 
 Pitch::~Pitch()
@@ -50,33 +49,65 @@ vector<double> Pitch::getRopeSegments()
     std::vector<tuple<double,double>>::iterator it;
 
     for(it = pitchGeometry.begin(); it != pitchGeometry.end(); ++it){
-        /*
-        double x = std::get<0>(*it) - std::get<0>(prev);
-        double y = std::get<1>(*it) - std::get<1>(prev);
-        double l = sqrt(x*x + y*y);
-        */
         double l = distanceFormula(prev, *it);
         lengths.push_back(l);
         prev = *it; //reassign prev to curr coords for next iteration
+        //n++;
     }
-}
-
-vector<double> Pitch::getRopeSegmentAngles()
-{
-    //get the angles
-    //given 3 points, or two segments, get the angle between them
 }
 
 Eigen::VectorXd Pitch::calcLapAngles()
 {
     //get the angles
     //given 3 points, or two segments, get the angle between them
+    double angle = 0;
+    int entriesCount = 0;
+    std::vector<double> temp;
+
+    //loop through all but last value
+    for(std::size_t i = 0; i != pitchGeometry.size() - 1; ++i)
+    {
+        tuple<double,double> p1{0,0};
+        tuple<double,double> p2;
+        tuple<double,double> p3;
+
+        if(i != 0){
+           p1 = pitchGeometry[i-1];
+        }
+        p2 = pitchGeometry[i];
+        p3 = pitchGeometry[i+1];
+
+        angle = PI - lawOfCosines(p1,p2,p3);
+        temp.push_back(angle);
+        entriesCount++;
+    }
+
+    //Eigen::VectorXd ret(entriesCount);
+    double* ptr = &temp[0];
+    Eigen::Map<Eigen::VectorXd> ret(ptr,entriesCount);
+    return ret;
+
+    //"first" and last points are not carabiners and thus do not need angles associated with them
+    //"first" is (0,0) to represent belayer
+    //last point is the climber
+    //all others need a coeff of friction, and this a lap angle
+
 }
 
 double Pitch::calcRopeLength()
 {
     double len = 0;
     //calculate from the pitch geometry
+    tuple<double,double> prev {0,0}; //start at origin
+    std::vector<tuple<double,double>>::iterator it;
+
+    for(it = pitchGeometry.begin(); it != pitchGeometry.end(); ++it){
+        double l = distanceFormula(prev, *it);
+        len += l;
+        prev = *it; //reassign prev to curr coords for next iteration
+        //n++;
+    }
+
     return len;
 }
 
