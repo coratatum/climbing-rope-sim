@@ -29,7 +29,7 @@ class Pitch
         virtual double getM();
         virtual double getL();
 
-        virtual Eigen::VectorXd incrementalBaseTension();
+        //virtual Eigen::VectorXd incrementalBaseTension();
 
         //helper funcs
         virtual double lawOfCosines(tuple<double,double> p1, tuple<double,double> p2, tuple<double,double> p3);
@@ -55,6 +55,7 @@ class Pitch
         vector<double> lapAngles;
         vector<int> slipConditions;
 
+        double S; //crit tension
         //int numCarabiners; //number of carabiners (size of several arrays)
 
 

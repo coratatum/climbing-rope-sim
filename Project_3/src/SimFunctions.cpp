@@ -2,7 +2,7 @@
 #include <math.h>
 
 #define E 2.718218
-#define G 9.8
+#define G 9.80665
 
 SimFunctions::SimFunctions()
 {
@@ -18,10 +18,10 @@ SimFunctions::~SimFunctions()
 THIS IS WHERE THE NEW VELOCITY OF THE FALLER GOES
 THIS IS HOW EVERYTHING WORKS
 */
-double SimFunctions::delS(double t, double v, Pitch& p)
+double SimFunctions::delS(double v, Pitch& p)
 {
     //for last runner
-    double Sn = v*t;
+    double Sn = v*tInc;
 
     //for first runner, use special belay device case??
 
@@ -88,7 +88,11 @@ Eigen::MatrixXd SimFunctions::createK(Pitch& p)
 
 Eigen::VectorXd SimFunctions::createDelT(Pitch& p)
 {
-
+    if(delT0 == null){
+        createDelT0();
+    }
+    delT = (p.k1*delE) + delT0;
+    return delT;
 }
 
 Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
@@ -99,6 +103,24 @@ Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
 
 Eigen::VectorXd SimFunctions::createDelT0(Pitch& p)
 {
+    double temp = (tInc/p.lambda);
+    int n = Ei.rows();
+    Eigen::VectorXd ret(n);
+    ret = ((p.k1*p.k2)*Ei) - (Ti*(p.k1+p.k2));
+    ret = ret * temp;
+
+    //set delT0??
+    delT0 = ret;
+
+    return ret;
+}
+
+Eigen::VectorXd SimFunctions::incrementalBaseTension()
+{
+    /*
+    this.T;
+    incT;
+    */
 
 }
 

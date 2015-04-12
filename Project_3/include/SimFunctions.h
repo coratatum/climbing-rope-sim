@@ -18,8 +18,9 @@ class SimFunctions
         virtual ~SimFunctions();
         virtual double fallFactor(Pitch& p);
         virtual double baseTension(Pitch& p);
+        virtual Eigen::VectorXd incrementalBaseTension();
        // virtual Matrix incrementalSlips(Pitch &p);
-        virtual double delS(double t, double v, Pitch& p);
+        virtual double delS(double v, Pitch& p);
         virtual Eigen::VectorXd calcTensionRatios(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalSlips(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalStrains(Pitch& p);
@@ -40,8 +41,8 @@ class SimFunctions
        // Pitch p; //have a pitch in the thing??
        double tInc; //how much to increase time at each time step
        Eigen::VectorXd tensionRatios;
-       Eigen::VectorXd sIncs;
-       Eigen::VectorXd eIncs;
+       Eigen::VectorXd Si;
+       Eigen::VectorXd Ei;
        Eigen::MatrixXd C;
 
        Eigen::MatrixXd K;
@@ -49,6 +50,11 @@ class SimFunctions
        Eigen::VectorXd delT;
 
        Eigen::VectorXd slipConditions;
+       //Eigen::VectorXd incT; //incremental Tensions
+       double T; //base tension
+       Eigen::VectorXd delS;
+       Eigen::VectorXd delE;
+       Eigen::VectorXd Ti;
 
 
 
