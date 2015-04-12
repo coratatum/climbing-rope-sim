@@ -111,6 +111,12 @@ double Pitch::calcRopeLength()
     return len;
 }
 
+Eigen::VectorXd Pitch::incrementalBaseTension()
+{
+
+}
+
+
 double Pitch::getd()
 {
     return d;

@@ -23,14 +23,15 @@ class Pitch
         virtual double calcRopeLength();
         virtual Eigen::VectorXd calcLapAngles();
         //uhmmmmm
-        virtual Eigen::VectorXd calcFrictionCoeffs();
-
-        //new, implement
+        //virtual Eigen::VectorXd calcFrictionCoeffs();
         virtual double getd();
         virtual double getk();
         virtual double getM();
         virtual double getL();
 
+        virtual Eigen::VectorXd incrementalBaseTension();
+
+        //helper funcs
         virtual double lawOfCosines(tuple<double,double> p1, tuple<double,double> p2, tuple<double,double> p3);
         virtual double distanceFormula(tuple<double,double> p1, tuple<double,double> p2);
 
