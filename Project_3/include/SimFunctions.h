@@ -5,6 +5,7 @@
 #include <Eigen/Core>
 
 
+
 /**
 Will hold the functions that the simulation uses
 Matrix calculations, etc.
@@ -20,11 +21,14 @@ class SimFunctions
         virtual double baseTension(Pitch& p);
         virtual Eigen::VectorXd incrementalBaseTension();
        // virtual Matrix incrementalSlips(Pitch &p);
-        virtual double delS(double v, Pitch& p);
+        virtual double calcDelS(double v, Pitch& p);
         virtual Eigen::VectorXd calcTensionRatios(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalSlips(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalStrains(Pitch& p);
         virtual Eigen::MatrixXd createC();
+
+       // virtual
+
 
         //implement
         virtual Eigen::MatrixXd createK(Pitch& p);
@@ -55,6 +59,8 @@ class SimFunctions
        Eigen::VectorXd delS;
        Eigen::VectorXd delE;
        Eigen::VectorXd Ti;
+       Eigen::MatrixXd L;
+       double critValue;
 
 
 

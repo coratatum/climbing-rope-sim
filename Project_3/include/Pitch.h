@@ -35,6 +35,9 @@ class Pitch
         virtual double lawOfCosines(tuple<double,double> p1, tuple<double,double> p2, tuple<double,double> p3);
         virtual double distanceFormula(tuple<double,double> p1, tuple<double,double> p2);
 
+        double k1; //
+        double k2; //
+        double lambda; //
 
     protected:
     private:
@@ -42,9 +45,7 @@ class Pitch
         double k; //
         double r; //runner radius
 
-        double k1; //
-        double k2; //
-        double lambda; //
+
         vector<tuple<double,double>> pitchGeometry;
         //calculated from various other givens:
 
