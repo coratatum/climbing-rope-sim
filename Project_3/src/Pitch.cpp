@@ -54,6 +54,8 @@ vector<double> Pitch::getRopeSegments()
         prev = *it; //reassign prev to curr coords for next iteration
         //n++;
     }
+    Li = lengths;
+    return lengths;
 }
 
 Eigen::VectorXd Pitch::calcLapAngles()

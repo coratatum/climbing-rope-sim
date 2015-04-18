@@ -39,6 +39,8 @@ class Pitch
         double k2; //
         double lambda; //
 
+        vector<double> Li;
+
     protected:
     private:
         double M; //mass of leader

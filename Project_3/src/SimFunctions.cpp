@@ -62,6 +62,7 @@ Eigen::VectorXd SimFunctions::calcTensionRatios(Pitch& p)
 
 Eigen::VectorXd SimFunctions::calcIncrementalSlips(Pitch& p)
 {
+    //uhhhhhhhhh nooooo..... this is all wrong -> solve system to get proper things
     delS = (-1*L*(Ti+delT0)) * (L*K*C);
     return delS;
 }
@@ -72,20 +73,29 @@ Eigen::VectorXd SimFunctions::calcIncrementalStrains(Pitch& p)
     return delE;
 }
 
-Eigen::MatrixXd SimFunctions::createC()
+Eigen::MatrixXd SimFunctions::createC(Pitch& p)
 {
     Eigen::VectorXd mainD(delE.rows());
-    Eigen::VectorXd upperD(delE.rows()+1);
+    Eigen::VectorXd upperD(delE.rows());
 
-    Eigen::MatrixXd ret(mainD.rows(),upperD.rows());
+    for(std::size_t i = 1; i < delE.rows(); i++)
+    {
+        mainD[i] = (-1-Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+        upperD[i] = (1+Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+    }
+
+    Eigen::MatrixXd ret(mainD.rows(),upperD.rows()+1);
     ret.diagonal() = mainD;
     ret.diagonal(1) = upperD;
 }
 
+/*
 double SimFunctions::calcCEntry()
 {
 
 }
+
+*/
 
 Eigen::MatrixXd SimFunctions::createK(Pitch& p)
 {

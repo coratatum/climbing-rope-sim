@@ -25,7 +25,7 @@ class SimFunctions
         virtual Eigen::VectorXd calcTensionRatios(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalSlips(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalStrains(Pitch& p);
-        virtual Eigen::MatrixXd createC();
+        virtual Eigen::MatrixXd createC(Pitch& p);
 
        // virtual
 
@@ -38,7 +38,7 @@ class SimFunctions
         virtual Eigen::VectorXd calcSlipConditions(Pitch& p);
 
         //private??
-        virtual double calcCEntry();
+        //virtual double calcCEntry();
 
     protected:
     private:
