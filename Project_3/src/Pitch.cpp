@@ -18,8 +18,10 @@ Pitch::Pitch()
     //ctor
     //Pitch::pitchGeometry = {{1,2},{1,2}};
     //Pitch::L = 4;
+    //implicit belay at 0,0
     pitchGeometry.push_back(make_tuple(0,2));
     pitchGeometry.push_back(make_tuple(0,4));
+    pitchGeometry.push_back(make_tuple(2,6)); //last is climber
 
     //get the length of the live rope from the geometry
     //once this works, move and use to make the segment list
@@ -28,6 +30,8 @@ Pitch::Pitch()
     tuple<double,double> prev;
     tuple<double,double> curr;*/
     L = calcRopeLength();
+    Li = getRopeSegments();
+    lapAngles = calcLapAngles();
 }
 
 Pitch::~Pitch()
@@ -41,21 +45,28 @@ vector<tuple<double,double>> Pitch::getPitchGeometry()
     return Pitch::pitchGeometry;
 }
 
-vector<double> Pitch::getRopeSegments()
+Eigen::VectorXd Pitch::getRopeSegments()
 {
     vector<double> lengths;
     //return a vector of rope segment lengths
     tuple<double,double> prev {0,0}; //start at origin
     std::vector<tuple<double,double>>::iterator it;
+    int entriesCount = 0;
 
     for(it = pitchGeometry.begin(); it != pitchGeometry.end(); ++it){
         double l = distanceFormula(prev, *it);
+
         lengths.push_back(l);
         prev = *it; //reassign prev to curr coords for next iteration
+        entriesCount++;
         //n++;
     }
-    Li = lengths;
-    return lengths;
+    //Li = lengths;
+
+    double* ptr = &lengths[0];
+    Eigen::Map<Eigen::VectorXd> ret(ptr,entriesCount);
+
+    return ret;
 }
 
 Eigen::VectorXd Pitch::calcLapAngles()
@@ -138,6 +149,11 @@ double Pitch::getL()
 double Pitch::getM()
 {
     return M;
+}
+
+Eigen::VectorXd Pitch::getLapAngles()
+{
+    return lapAngles;
 }
 
 

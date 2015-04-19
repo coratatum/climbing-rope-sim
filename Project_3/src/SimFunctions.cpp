@@ -1,12 +1,27 @@
 #include "SimFunctions.h"
 #include <math.h>
+#include <iostream>
 
 #define E 2.718218
 #define G 9.80665
 
+//using namespace Eigen;
+
 SimFunctions::SimFunctions()
 {
     //ctor
+}
+
+SimFunctions::SimFunctions(Pitch& p)
+{
+    //ctor
+    //Eigen::VectorXd temp(p.calcLapAngles().rows());
+    //Eigen::MatrixX2d tempM(temp.rows(),temp.rows());
+    Ei = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    Si = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    tensionRatios = calcTensionRatios(p);
+    C = createC(p);
+
 }
 
 SimFunctions::~SimFunctions()
@@ -42,9 +57,11 @@ double SimFunctions::baseTension(Pitch& p)
 Eigen::VectorXd SimFunctions::calcTensionRatios(Pitch& p)
 {
     //let coeff of friction be set here:
+    //between .18 and .22 for rope on steel, according to the paper
     double coeffFriction = 0.2;
 
     Eigen::VectorXd lap = p.calcLapAngles();
+    //std::cout<< lap;
     Eigen::VectorXd exponent = lap*coeffFriction;
 
     int entriesCount = exponent.rows();
@@ -63,7 +80,7 @@ Eigen::VectorXd SimFunctions::calcTensionRatios(Pitch& p)
 Eigen::VectorXd SimFunctions::calcIncrementalSlips(Pitch& p)
 {
     //uhhhhhhhhh nooooo..... this is all wrong -> solve system to get proper things
-    delS = (-1*L*(Ti+delT0)) * (L*K*C);
+    //delS = (-1*L*(Ti+delT0)) * (L*K*C);
     return delS;
 }
 
@@ -74,6 +91,38 @@ Eigen::VectorXd SimFunctions::calcIncrementalStrains(Pitch& p)
 }
 
 Eigen::MatrixXd SimFunctions::createC(Pitch& p)
+{
+    int s = p.getLapAngles().rows()+1; //number of carabiners
+    //s++;
+
+    Eigen::VectorXd mainD;
+    mainD = Eigen::VectorXd::Zero(s);
+    Eigen::VectorXd upperD;
+    upperD = Eigen::VectorXd::Zero(s);
+
+
+
+    mainD[0] = (-1-Ei[0])/(p.Li[0]-Si[0]);
+    upperD[0] = (1+Ei[0])/(p.Li[0]-Si[0]);
+
+    for(std::size_t i = 1; i < s; ++i)
+    {
+        mainD[i] = (-1-Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+        upperD[i] = (1+Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+        //std::cout <<(-1-Ei[i])<<'\n';
+    }
+
+    Eigen::MatrixXd ret(s,s+1);
+    ret = Eigen::MatrixXd::Zero(s, s+1);
+    ret.diagonal() = mainD;
+    ret.diagonal(1) = upperD;
+   // std::cout << "main: " <<'\n'<< mainD <<'\n';
+   // std::cout << "upper: " << '\n'<< upperD <<'\n';
+
+    return ret;
+}
+
+Eigen::MatrixXd SimFunctions::createL(Pitch& p)
 {
     Eigen::VectorXd mainD(delE.rows());
     Eigen::VectorXd upperD(delE.rows());
@@ -176,6 +225,26 @@ Eigen::VectorXd SimFunctions::incrementalBaseTension()
     incT;
     */
 
+}
+
+Eigen::VectorXd SimFunctions::getEi()
+{
+    return Ei;
+}
+
+Eigen::VectorXd SimFunctions::getSi()
+{
+    return Si;
+}
+
+Eigen::VectorXd SimFunctions::getTensionRatios()
+{
+    return tensionRatios;
+}
+
+Eigen::MatrixXd SimFunctions::getC()
+{
+    return C;
 }
 
 

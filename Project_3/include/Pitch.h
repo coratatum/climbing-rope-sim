@@ -18,7 +18,7 @@ class Pitch
         Pitch();
         virtual ~Pitch();
         virtual vector<tuple<double,double>> getPitchGeometry();
-        virtual vector<double> getRopeSegments();
+        virtual Eigen::VectorXd getRopeSegments();
         //virtual vector<double> getRopeSegmentAngles();
         virtual double calcRopeLength();
         virtual Eigen::VectorXd calcLapAngles();
@@ -28,6 +28,7 @@ class Pitch
         virtual double getk();
         virtual double getM();
         virtual double getL();
+        virtual Eigen::VectorXd getLapAngles();
 
         //virtual Eigen::VectorXd incrementalBaseTension();
 
@@ -39,7 +40,7 @@ class Pitch
         double k2; //
         double lambda; //
 
-        vector<double> Li;
+        Eigen::VectorXd Li;
 
     protected:
     private:
@@ -53,16 +54,14 @@ class Pitch
 
         double L; //total length of rope
         double d; //vert dist above last runner
+        //Eigen::VectorXd Li;
 
         vector<double> tensionRatios;
-        vector<double> lapAngles;
+        Eigen::VectorXd lapAngles;
         vector<int> slipConditions;
 
         double S; //crit tension
         //int numCarabiners; //number of carabiners (size of several arrays)
-
-
-
 };
 
 #endif // PITCH_H

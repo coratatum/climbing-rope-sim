@@ -16,6 +16,7 @@ class SimFunctions
 {
     public:
         SimFunctions();
+        SimFunctions(Pitch& p);
         virtual ~SimFunctions();
         virtual double fallFactor(Pitch& p);
         virtual double baseTension(Pitch& p);
@@ -26,6 +27,7 @@ class SimFunctions
         virtual Eigen::VectorXd calcIncrementalSlips(Pitch& p);
         virtual Eigen::VectorXd calcIncrementalStrains(Pitch& p);
         virtual Eigen::MatrixXd createC(Pitch& p);
+        virtual Eigen::MatrixXd createL(Pitch& p);
 
        // virtual
 
@@ -39,6 +41,13 @@ class SimFunctions
 
         //private??
         //virtual double calcCEntry();
+
+
+        virtual Eigen::VectorXd getEi();
+        virtual Eigen::VectorXd getSi();
+        virtual Eigen::VectorXd getTensionRatios();
+        virtual Eigen::MatrixXd getC();
+
 
     protected:
     private:
