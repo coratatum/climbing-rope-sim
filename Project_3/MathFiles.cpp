@@ -26,7 +26,10 @@ int main(){
 
     std::cout << "C: " << '\n';
     std::cout << test.getC() <<'\n';
-
+    /*
+    std::cout << "L: " << '\n';
+    std::cout << test.getL() <<'\n';
+    */
     //std::cout << p.Li;
 
     return 0;

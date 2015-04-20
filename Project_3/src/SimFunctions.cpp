@@ -14,13 +14,16 @@ SimFunctions::SimFunctions()
 
 SimFunctions::SimFunctions(Pitch& p)
 {
-    //ctor
-    //Eigen::VectorXd temp(p.calcLapAngles().rows());
-    //Eigen::MatrixX2d tempM(temp.rows(),temp.rows());
+    //set the critical slip value (to arbitrary value)
+    critValue = 10;
     Ei = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
     Si = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    delT0 = createDelT0(p);
+   // delT = createDelT(p);
     tensionRatios = calcTensionRatios(p);
     C = createC(p);
+    //L = createL(p);
+
 
 }
 
@@ -124,18 +127,36 @@ Eigen::MatrixXd SimFunctions::createC(Pitch& p)
 
 Eigen::MatrixXd SimFunctions::createL(Pitch& p)
 {
-    Eigen::VectorXd mainD(delE.rows());
-    Eigen::VectorXd upperD(delE.rows());
+    int s = p.getLapAngles().rows()+1;
+    Eigen::VectorXd mainD;
+    mainD = Eigen::VectorXd::Zero(s);
+    Eigen::VectorXd upperD;
+    upperD = Eigen::VectorXd::Zero(s-1); //??
 
-    for(std::size_t i = 1; i < delE.rows(); i++)
+    //case for 0 spot: uhm...
+    if(Ti[0] >= critValue){
+       // mainD[0] = 1;
+       // upperD[0] = 1;
+
+    } //else slip is 0, do nothing
+
+    for(std::size_t i = 0; i < s-1; i++)
     {
-        mainD[i] = (-1-Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
-        upperD[i] = (1+Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+        if(Ti[i] == ((Ti[i+1])/(tensionRatios[i]))){
+            mainD[i] = 1;
+            upperD[i] = -1/tensionRatios[i];
+        } else if(Ti[i] == ((Ti[i+1])*(tensionRatios[i]))){
+            mainD[i] = -1;
+            upperD[i] = -1*tensionRatios[i];
+        } //else { between, do nothing}
     }
 
-    Eigen::MatrixXd ret(mainD.rows(),upperD.rows()+1);
+    Eigen::MatrixXd ret(s,s);
+    ret = Eigen::MatrixXd::Zero(s,s);
     ret.diagonal() = mainD;
     ret.diagonal(1) = upperD;
+
+    return ret;
 }
 
 /*
@@ -206,14 +227,14 @@ Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
 
 Eigen::VectorXd SimFunctions::createDelT0(Pitch& p)
 {
-    double temp = (tInc/p.lambda);
+    //double temp = (tInc/p.lambda);
     int n = Ei.rows();
     Eigen::VectorXd ret(n);
     ret = ((p.k1*p.k2)*Ei) - (Ti*(p.k1+p.k2));
-    ret = ret * temp;
+    //ret = ret * temp;
 
     //set delT0??
-    delT0 = ret;
+    //delT0 = ret;
 
     return ret;
 }
