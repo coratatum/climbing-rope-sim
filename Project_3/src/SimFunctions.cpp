@@ -16,13 +16,17 @@ SimFunctions::SimFunctions(Pitch& p)
 {
     //set the critical slip value (to arbitrary value)
     critValue = 10;
+
     Ei = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
     Si = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    //CHANGE:
+    Ti = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    //
     delT0 = createDelT0(p);
-   // delT = createDelT(p);
+    //delT = createDelT(p);
     tensionRatios = calcTensionRatios(p);
     C = createC(p);
-    //L = createL(p);
+    L = createL(p);
 
 
 }
@@ -221,11 +225,11 @@ Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
 
 Eigen::VectorXd SimFunctions::createDelT0(Pitch& p)
 {
-    //double temp = (tInc/p.lambda);
+    double temp = (tInc/p.lambda);
     int n = Ei.rows();
     Eigen::VectorXd ret(n);
     ret = ((p.k1*p.k2)*Ei) - (Ti*(p.k1+p.k2));
-    //ret = ret * temp;
+    ret = ret * temp;
 
     //set delT0??
     //delT0 = ret;
@@ -262,4 +266,13 @@ Eigen::MatrixXd SimFunctions::getC()
     return C;
 }
 
+Eigen::VectorXd SimFunctions::getTi()
+{
+    return Ti;
+}
+
+Eigen::MatrixXd SimFunctions::getL()
+{
+    return L;
+}
 

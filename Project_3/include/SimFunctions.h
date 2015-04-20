@@ -37,7 +37,7 @@ class SimFunctions
         virtual Eigen::VectorXd createDelT(Pitch& p);
         virtual Eigen::VectorXd createDelT0(Pitch& p);
 
-        virtual Eigen::VectorXd calcSlipConditions(Pitch& p);
+        //virtual Eigen::VectorXd calcSlipConditions(Pitch& p);
 
         //private??
         //virtual double calcCEntry();
@@ -47,6 +47,8 @@ class SimFunctions
         virtual Eigen::VectorXd getSi();
         virtual Eigen::VectorXd getTensionRatios();
         virtual Eigen::MatrixXd getC();
+        virtual Eigen::VectorXd getTi();
+        virtual Eigen::MatrixXd getL();
 
 
     protected:

@@ -31,6 +31,8 @@ Pitch::Pitch()
     tuple<double,double> curr;*/
     L = calcRopeLength();
     Li = getRopeSegments();
+    k1 = 1;
+    k2 = 2;
     lapAngles = calcLapAngles();
 }
 
