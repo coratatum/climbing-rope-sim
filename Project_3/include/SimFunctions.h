@@ -49,6 +49,7 @@ class SimFunctions
         virtual Eigen::MatrixXd getC();
         virtual Eigen::VectorXd getTi();
         virtual Eigen::MatrixXd getL();
+        virtual Eigen::MatrixXd getK();
 
 
     protected:

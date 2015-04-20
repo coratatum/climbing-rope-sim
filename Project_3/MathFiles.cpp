@@ -34,6 +34,11 @@ int main(){
     std::cout << "L: " << '\n';
     std::cout << test.getL() <<'\n';
 
+    std::cout << "K: " << '\n';
+    std::cout << test.getK() <<'\n';
+
+    std::cout << test.getL()*test.getK()*test.getC();
+
     //std::cout << p.Li;
 
     return 0;

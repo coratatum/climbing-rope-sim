@@ -23,10 +23,10 @@ SimFunctions::SimFunctions(Pitch& p)
     Ti = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
     //
     delT0 = createDelT0(p);
-    //delT = createDelT(p);
     tensionRatios = calcTensionRatios(p);
     C = createC(p);
     L = createL(p);
+    K = createK(p);
 
 
 }
@@ -167,8 +167,8 @@ Eigen::MatrixXd SimFunctions::createK(Pitch& p)
 {
     Eigen::MatrixXd i(delT0.rows(),delT0.rows());
     i.setIdentity(delT0.rows(),delT0.rows());
-    K = p.k1 * i;
-    return K;
+    Eigen::MatrixXd ret = p.k1 * i;
+    return ret;
 }
 
 Eigen::VectorXd SimFunctions::createDelT(Pitch& p)
@@ -274,5 +274,10 @@ Eigen::VectorXd SimFunctions::getTi()
 Eigen::MatrixXd SimFunctions::getL()
 {
     return L;
+}
+
+Eigen::MatrixXd SimFunctions::getK()
+{
+    return K;
 }
 
