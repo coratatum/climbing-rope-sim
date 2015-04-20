@@ -159,14 +159,6 @@ Eigen::MatrixXd SimFunctions::createL(Pitch& p)
     return ret;
 }
 
-/*
-double SimFunctions::calcCEntry()
-{
-
-}
-
-*/
-
 Eigen::MatrixXd SimFunctions::createK(Pitch& p)
 {
     Eigen::MatrixXd i(delT0.rows(),delT0.rows());
@@ -186,6 +178,7 @@ Eigen::VectorXd SimFunctions::createDelT(Pitch& p)
     return delT;
 }
 
+/*
 Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
 {
     //special condition for belay device
@@ -224,6 +217,7 @@ Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
     slipConditions = temp;
     return temp;
 }
+*/
 
 Eigen::VectorXd SimFunctions::createDelT0(Pitch& p)
 {
