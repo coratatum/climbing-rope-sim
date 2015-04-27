@@ -29,6 +29,7 @@ class Pitch
         virtual double getM();
         virtual double getL();
         virtual Eigen::VectorXd getLapAngles();
+        virtual double calculateD();
 
         //virtual Eigen::VectorXd incrementalBaseTension();
 

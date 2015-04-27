@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1429543523 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\mathfiles.cpp
+1429816106 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\mathfiles.cpp
 	<Eigen/Core>
 	<iostream>
 	<Pitch.h>
 	<SimFunctions.h>
 	<math.h>
+	<Eigen/LU>
 
 1427987587 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\core
 	"src/Core/util/DisableStupidWarnings.h"
@@ -407,22 +408,58 @@
 
 1427987591 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\eigen2support\mathfunctions.h
 
-1429542699 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
+1429828613 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\pitch.h
 	<vector>
 	<tuple>
 	<Eigen/Core>
 
-1429542715 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
+1430148216 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\pitch.cpp
 	"Pitch.h"
 	<Eigen/Core>
 	<math.h>
 
-1429545995 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\simfunctions.cpp
+1430148108 source:c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\src\simfunctions.cpp
 	"SimFunctions.h"
 	<math.h>
 	<iostream>
 
-1429545981 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\simfunctions.h
+1429816281 c:\users\cora\documents\cx 4230\climbing-rope-sim\project_3\include\simfunctions.h
 	<Pitch.h>
 	<Eigen/Core>
+
+1427987587 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\lu
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/misc/Solve.h"
+	"src/misc/Kernel.h"
+	"src/misc/Image.h"
+	"src/LU/FullPivLU.h"
+	"src/LU/PartialPivLU.h"
+	"src/LU/PartialPivLU_MKL.h"
+	"src/LU/Determinant.h"
+	"src/LU/Inverse.h"
+	"src/LU/arch/Inverse_SSE.h"
+	"src/Eigen2Support/LU.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1427987602 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\misc\solve.h
+
+1427987602 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\misc\kernel.h
+
+1427987602 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\misc\image.h
+
+1427987597 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\lu\fullpivlu.h
+
+1427987597 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\lu\partialpivlu.h
+
+1427987597 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\lu\partialpivlu_mkl.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1427987597 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\lu\determinant.h
+
+1427987597 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\lu\inverse.h
+
+1427987597 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\lu\arch\inverse_sse.h
+
+1427987590 c:\users\cora\documents\cx 4230\climbing-rope-sim\libs\eigen\src\eigen2support\lu.h
 

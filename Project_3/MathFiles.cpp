@@ -3,8 +3,11 @@
 #include <Pitch.h>
 #include <SimFunctions.h>
 #include <math.h>
+#include<Eigen/LU>
 
 #define PI 3.14159265
+using namespace std;
+using namespace Eigen;
 
 /**
 Testing 1,2,3
@@ -13,31 +16,47 @@ Testing 1,2,3
 
 int main(){
     Pitch p = Pitch();
-    std::cout << "Len: " << p.getL() << '\n';
+    cout << "Len: " << p.getL() << '\n';
 
     SimFunctions test = SimFunctions(p);
 
-    std::cout << "Ei: " << '\n';
-    std::cout << test.getEi() <<'\n';
-    std::cout << "Si: " << '\n';
-    std::cout << test.getSi() <<'\n';
-    std::cout << "Tension Ratios: " << '\n';
-    std::cout << test.getTensionRatios() <<'\n';
+    cout << "Ei: " << '\n';
+    cout << test.getEi() <<'\n';
+    cout << "Si: " << '\n';
+    cout << test.getSi() <<'\n';
+    cout << "Tension Ratios: " << '\n';
+    cout << test.getTensionRatios() <<'\n';
 
-    std::cout << "C: " << '\n';
-    std::cout << test.getC() <<'\n';
+    cout << "C: " << '\n';
+    cout << test.getC() <<'\n';
 
     //std::cout << Ti;
-    std::cout << "Ti: " << '\n';
-    std::cout << test.getTi()<<'\n';
+    cout << "Ti: " << '\n';
+    cout << test.getTi()<<'\n';
 
-    std::cout << "L: " << '\n';
-    std::cout << test.getL() <<'\n';
+    cout << "L: " << '\n';
+    cout << test.getL() <<'\n';
 
-    std::cout << "K: " << '\n';
-    std::cout << test.getK() <<'\n';
+    cout << "K: " << '\n';
+    cout << test.getK() <<'\n';
 
-    std::cout << test.getL()*test.getK()*test.getC();
+    cout << test.getL()*test.getK()*test.getC() << '\n';
+    cout << "asdf: " << '\n';
+    cout <<test.getDelT0() << endl;
+
+    //Matrix<float,2,3> m = Matrix<float,2,3>::Random();
+    MatrixXd m = test.getL()*test.getK()*test.getC();
+    MatrixXd y = (-1)*(test.getL())*(test.getTi()+test.getDelT0());
+    cout << "Here is the matrix m:" << endl << m << endl;
+    cout << "Here is the matrix y:" << endl << y << endl;
+    MatrixXd x = m.fullPivLu().solve(y);
+    if((m*x).isApprox(y))
+    {
+        cout << "Here is a solution x to the equation mx=y:" << endl << x << endl;
+    }
+    else
+        cout << "The equation mx=y does not have any solution." << endl;
+
 
     //std::cout << p.Li;
 

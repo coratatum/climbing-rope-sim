@@ -31,9 +31,13 @@ Pitch::Pitch()
     tuple<double,double> curr;*/
     L = calcRopeLength();
     Li = getRopeSegments();
-    k1 = 1;
-    k2 = 2;
+    k = 1;
+    k1 = 35.0; //from paper
+    k2 = 20.0; //from paper
+    lambda = 3.0; //from paper
     lapAngles = calcLapAngles();
+    d = calculateD();
+
 }
 
 Pitch::~Pitch()
@@ -57,7 +61,6 @@ Eigen::VectorXd Pitch::getRopeSegments()
 
     for(it = pitchGeometry.begin(); it != pitchGeometry.end(); ++it){
         double l = distanceFormula(prev, *it);
-
         lengths.push_back(l);
         prev = *it; //reassign prev to curr coords for next iteration
         entriesCount++;
@@ -67,7 +70,6 @@ Eigen::VectorXd Pitch::getRopeSegments()
 
     double* ptr = &lengths[0];
     Eigen::Map<Eigen::VectorXd> ret(ptr,entriesCount);
-
     return ret;
 }
 
@@ -124,6 +126,14 @@ double Pitch::calcRopeLength()
     }
 
     return len;
+}
+
+double Pitch::calculateD()
+{
+    tuple<double,double> l = (pitchGeometry.back());
+    tuple<double,double> l2 = (pitchGeometry.rbegin()[1]);
+
+    return std::get<1>(l) - std::get<1>(l2);
 }
 
 /*

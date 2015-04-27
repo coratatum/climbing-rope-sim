@@ -16,11 +16,15 @@ SimFunctions::SimFunctions(Pitch& p)
 {
     //set the critical slip value (to arbitrary value)
     critValue = 10;
+    tInc = .01; //time interval set to some arbitrary number
+    tInc = .01; //time interval set to some arbitrary number
+
+    T = baseTension(p);
 
     Ei = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
     Si = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
     //CHANGE:
-    Ti = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    Ti = createTi(p);
     //
     delT0 = createDelT0(p);
     tensionRatios = calcTensionRatios(p);
@@ -65,7 +69,8 @@ Eigen::VectorXd SimFunctions::calcTensionRatios(Pitch& p)
 {
     //let coeff of friction be set here:
     //between .18 and .22 for rope on steel, according to the paper
-    double coeffFriction = 0.2;
+    //he used .22 in experiments
+    double coeffFriction = 0.22;
 
     Eigen::VectorXd lap = p.calcLapAngles();
     //std::cout<< lap;
@@ -146,10 +151,10 @@ Eigen::MatrixXd SimFunctions::createL(Pitch& p)
 
     for(std::size_t i = 0; i < s-1; i++)
     {
-        if(Ti[i] == ((Ti[i+1])/(tensionRatios[i]))){
+        if(Ti[i] <= ((Ti[i+1])/(tensionRatios[i]))){
             mainD[i] = 1;
             upperD[i] = -1/tensionRatios[i];
-        } else if(Ti[i] == ((Ti[i+1])*(tensionRatios[i]))){
+        } else if(Ti[i] >= ((Ti[i+1])*(tensionRatios[i]))){
             mainD[i] = -1;
             upperD[i] = -1*tensionRatios[i];
         } //else { between, do nothing}
@@ -246,6 +251,21 @@ Eigen::VectorXd SimFunctions::incrementalBaseTension()
 
 }
 
+Eigen::VectorXd SimFunctions::createTi(Pitch& p)
+{
+    int n = p.getRopeSegments().rows();
+    Eigen::VectorXd ret = Eigen::VectorXd::Zero(n);
+   // Eigen::VectorXd segments = p.getRopeSegments();
+    double l = p.getL();
+    for(int i = 0; i < n; i++){
+        ret[i] = (p.Li[i]/l) * T;
+    }
+
+    return ret;
+
+
+}
+
 Eigen::VectorXd SimFunctions::getEi()
 {
     return Ei;
@@ -269,6 +289,11 @@ Eigen::MatrixXd SimFunctions::getC()
 Eigen::VectorXd SimFunctions::getTi()
 {
     return Ti;
+}
+
+Eigen::VectorXd SimFunctions::getDelT0()
+{
+    return delT0;
 }
 
 Eigen::MatrixXd SimFunctions::getL()
