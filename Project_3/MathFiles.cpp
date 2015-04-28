@@ -6,6 +6,7 @@
 #include<Eigen/LU>
 
 #define PI 3.14159265
+#define G 9.80665
 using namespace std;
 using namespace Eigen;
 
@@ -19,68 +20,11 @@ int main(){
     cout << "Len: " << p.getL() << '\n';
 
     SimFunctions test = SimFunctions(p);
-/*
-    cout << "Ei: " << '\n';
-    cout << test.getEi() <<'\n';
-    cout << "Si: " << '\n';
-    cout << test.getSi() <<'\n';
-    cout << "Tension Ratios: " << '\n';
-    cout << test.getTensionRatios() <<'\n';
 
-    cout << "C: " << '\n';
-    cout << test.getC() <<'\n';
-
-    //std::cout << Ti;
-    cout << "Ti: " << '\n';
-    cout << test.getTi()<<'\n';
-
-    cout << "L: " << '\n';
-    cout << test.getL() <<'\n';
-
-    cout << "K: " << '\n';
-    cout << test.getK() <<'\n';
-
-    cout << test.getL()*test.getK()*test.getC() << '\n';
-    cout << "asdf: " << '\n';
-    cout <<test.getDelT0() << endl;
-
-    //Matrix<float,2,3> m = Matrix<float,2,3>::Random();
-    MatrixXd m = test.getL()*test.getK()*test.getC();
-    MatrixXd y = (-1)*(test.getL())*(test.getTi()+test.getDelT0());
-    cout << "Here is the matrix m:" << endl << m << endl;
-    cout << "Here is the matrix y:" << endl << y << endl;
-    MatrixXd x = m.fullPivLu().solve(y);
-    if((m*x).isApprox(y))
-    {
-        cout << "Here is a solution x to the equation mx=y:" << endl << x << endl;
-    }
-    else
-        cout << "The equation mx=y does not have any solution." << endl;
-
-    //have proper "slip" x:
-    //calculate del E
-    VectorXd delE1 = test.getC()*x;
-    //VectorXd delE1 = VectorXd::Constant(y.rows(), 0);
-    //delE1[0] = .05;
-    cout << "delE1: " << '\n';
-    cout << delE1 << endl;
-    //now get delT
-    VectorXd delT1 = (test.getK()*delE1) + test.getDelT0();
-    cout << "delT1: " << '\n';
-    cout << delT1 << endl;
-
-    VectorXd newTi = delT1+test.getTi();
-    cout << "newTi: " << '\n';
-    cout << newTi << endl;
-
-
-    test.Ei = delE1;
-    test.
-*/
-    // mini sim test of some n rounds
+    //Simulation set up
     double time = 0;
-    double vel = 9.8;
-    for(int i = 0; i < 20; i++){
+    double vel = sqrt(2*G*p.getd())/2.0;
+    for(int i = 0; i < 50; i++){
         MatrixXd m = test.getL()*test.getK()*test.getC();
         MatrixXd y = (-1)*(test.getL())*(test.getTi()+test.getDelT0());
         cout << "Here is the matrix m:" << endl << m << endl;
