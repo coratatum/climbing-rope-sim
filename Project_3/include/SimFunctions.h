@@ -53,11 +53,17 @@ class SimFunctions
         virtual Eigen::MatrixXd getL();
         virtual Eigen::MatrixXd getK();
 
+        virtual void setEi(Eigen::VectorXd v);
+        virtual void setSi(Eigen::VectorXd v);
+        virtual void incrementTi(Eigen::VectorXd v);
+        virtual double calcNewVelocity(double v, Pitch& p);
+
+        double tInc; //how much to increase time at each time step
 
     protected:
     private:
        // Pitch p; //have a pitch in the thing??
-       double tInc; //how much to increase time at each time step
+
        Eigen::VectorXd tensionRatios;
        Eigen::VectorXd Si;
        Eigen::VectorXd Ei;

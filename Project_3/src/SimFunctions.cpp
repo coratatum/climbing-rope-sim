@@ -15,13 +15,13 @@ SimFunctions::SimFunctions()
 SimFunctions::SimFunctions(Pitch& p)
 {
     //set the critical slip value (to arbitrary value)
-    critValue = 10;
-    tInc = .01; //time interval set to some arbitrary number
+    critValue = 2;
     tInc = .01; //time interval set to some arbitrary number
 
     T = baseTension(p);
 
-    Ei = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+   // Ei = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
+    Ei = Eigen::VectorXd::Constant(p.calcLapAngles().rows()+1,.05);
     Si = Eigen::VectorXd::Zero(p.calcLapAngles().rows()+1);
     //CHANGE:
     Ti = createTi(p);
@@ -130,7 +130,7 @@ Eigen::MatrixXd SimFunctions::createC(Pitch& p)
     ret.diagonal(1) = upperD;
    // std::cout << "main: " <<'\n'<< mainD <<'\n';
    // std::cout << "upper: " << '\n'<< upperD <<'\n';
-
+    C = ret; //help
     return ret;
 }
 
@@ -144,17 +144,22 @@ Eigen::MatrixXd SimFunctions::createL(Pitch& p)
 
     //case for 0 spot: uhm...
     if(Ti[0] >= critValue){
-       // mainD[0] = 1;
-       // upperD[0] = 1;
+        mainD[0] = 1;
+        //upperD[0] = -1/tensionRatios[0];
 
     } //else slip is 0, do nothing
 
-    for(std::size_t i = 0; i < s-1; i++)
+    for(std::size_t i = 1; i < s-1; i++)
     {
-        if(Ti[i] <= ((Ti[i+1])/(tensionRatios[i]))){
+            //std::cout << "BLEH 1" << std::endl;
+            //std::cout << ((Ti[i+1])/(tensionRatios[i])) << std::endl;
+            //std::cout << "BLEH 2" << std::endl;
+            //std::cout << ((Ti[i+1])*(tensionRatios[i])) << std::endl;
+        if(Ti[i] >= ((Ti[i+1])/(tensionRatios[i]))){
             mainD[i] = 1;
             upperD[i] = -1/tensionRatios[i];
-        } else if(Ti[i] >= ((Ti[i+1])*(tensionRatios[i]))){
+
+        } else if(Ti[i] <= ((Ti[i+1])*(tensionRatios[i]))){
             mainD[i] = -1;
             upperD[i] = -1*tensionRatios[i];
         } //else { between, do nothing}
@@ -164,7 +169,7 @@ Eigen::MatrixXd SimFunctions::createL(Pitch& p)
     ret = Eigen::MatrixXd::Zero(s,s);
     ret.diagonal() = mainD;
     ret.diagonal(1) = upperD;
-
+    L = ret;
     return ret;
 }
 
@@ -178,55 +183,9 @@ Eigen::MatrixXd SimFunctions::createK(Pitch& p)
 
 Eigen::VectorXd SimFunctions::createDelT(Pitch& p)
 {
-    /*
-    if(delT0 == null){
-        createDelT0(p);
-    }
-    */
-    delT = (p.k1*delE) + delT0;
+    delT = (K*delE) + delT0;
     return delT;
 }
-
-/*
-Eigen::VectorXd SimFunctions::calcSlipConditions(Pitch& p)
-{
-    //special condition for belay device
-    //EXTENSION
-    double slipCond0;
-    if(Ti[1] == critValue){
-        int chance = 4;
-        bool flag = true;
-        while(flag){
-            //random number generated in range of 1-chance
-            //if mod 0, then "increase" chance and loop again
-            //else, no more slip -> stop loop
-            bool flag = false;
-        }
-        slipCond0 = 1;
-
-    }
-    //use delT
-    //tensionRatios
-    Eigen::VectorXd temp(Ti.rows());
-    temp[0] = slipCond0;
-    for(std::size_t i = 1; i < Ti.rows()-1; i++){
-        if(Ti[i] == tensionRatios[i]*Ti[i+1]){
-            //slip condition is -1
-            temp[i] = -1;
-            delT[i] = tensionRatios[i]*delT[i+1];
-        } else if(Ti[i] == Ti[i+1]/tensionRatios[i]){
-            temp[i] = 1;
-            delT[i] = delT[i+1]/tensionRatios[i];
-        } else {
-            //slip condition is 0
-            temp[i] = 0;
-        }
-    }
-
-    slipConditions = temp;
-    return temp;
-}
-*/
 
 Eigen::VectorXd SimFunctions::createDelT0(Pitch& p)
 {
@@ -255,16 +214,33 @@ Eigen::VectorXd SimFunctions::createTi(Pitch& p)
 {
     int n = p.getRopeSegments().rows();
     Eigen::VectorXd ret = Eigen::VectorXd::Zero(n);
-   // Eigen::VectorXd segments = p.getRopeSegments();
-    double l = p.getL();
-    for(int i = 0; i < n; i++){
-        ret[i] = (p.Li[i]/l) * T;
-    }
-
     return ret;
-
-
 }
+
+void SimFunctions::setEi(Eigen::VectorXd v)
+{
+    Ei = v;
+}
+void SimFunctions::setSi(Eigen::VectorXd v)
+{
+    Si = v;
+}
+void SimFunctions::incrementTi(Eigen::VectorXd v)
+{
+    //check that no tensions are < 0??
+    Ti = Ti + v;
+}
+
+double SimFunctions::calcNewVelocity(double v, Pitch& p)
+{
+    if(Ti.rows() > 0)
+        return v + (G-(Ti[Ti.rows()-1])/p.getM())*tInc;
+    else{
+    std::cout << "Error" << std::endl;
+      return 0;
+    }
+}
+
 
 Eigen::VectorXd SimFunctions::getEi()
 {
@@ -305,4 +281,3 @@ Eigen::MatrixXd SimFunctions::getK()
 {
     return K;
 }
-
