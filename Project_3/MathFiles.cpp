@@ -27,7 +27,7 @@ int main(){
     double MaxTension = 0;
     double MaxTensionTime = 0;
 
-    for(int i = 0; i < 50; i++){
+    for(int i = 0; i < 150; i++){
         MatrixXd m = test.getL()*test.getK()*test.getC();
         MatrixXd y = (-1)*(test.getL())*(test.getTi()+test.getDelT0());
         //cout << "Here is the matrix m:" << endl << m << endl;
@@ -41,8 +41,8 @@ int main(){
             cout << "The equation mx=y does not have any solution." << endl;
 
         //VectorXd newTi = delT1+test.getTi();
-        cout << "L: " << '\n';
-        cout << test.getL() << '\n';
+        //cout << "L: " << '\n';
+        //cout << test.getL() << '\n';
         //cout << "L: " << '\n';
         //cout << test.getL() << '\n';
         int n = x.rows();
@@ -52,13 +52,13 @@ int main(){
         x += asdf;
 
 
-        cout << "x: " << '\n';
-        cout << x << endl;
+      //  cout << "x: " << '\n';
+      //  cout << x << endl;
 
         VectorXd delE1 = test.getC()*x;
         VectorXd delT1 = (test.getK()*delE1) + test.getDelT0();
-        cout << "delT1: " << '\n';
-        cout << delT1 << endl;
+       // cout << "delT1: " << '\n';
+       // cout << delT1 << endl;
 
         test.setSi(x);
         test.setEi(delE1);
@@ -106,7 +106,8 @@ int main(){
     }
 
     //std::cout << p.Li;
-    cout << "Max Tension : " << MaxTension << " at " << MaxTensionTime<< endl;
+    cout << "Max Tension: " << MaxTension << " at " << MaxTensionTime<< endl;
+    cout << "Length of Rope: " << p.getL() << '\n';
 
     return 0;
 }

@@ -19,14 +19,31 @@ Pitch::Pitch()
     //Pitch::pitchGeometry = {{1,2},{1,2}};
     //Pitch::L = 4;
     //implicit belay at 0,0
+    /*Trial 1 */
+    /*
     pitchGeometry.push_back(make_tuple(0,1));
     pitchGeometry.push_back(make_tuple(0,2));
     pitchGeometry.push_back(make_tuple(0,3));
     pitchGeometry.push_back(make_tuple(0,4));
-    //pitchGeometry.push_back(make_tuple(1,4));
-    //pitchGeometry.push_back(make_tuple(1,2));
-    //pitchGeometry.push_back(make_tuple(2,4));
-    //pitchGeometry.push_back(make_tuple(2,5));
+    */
+    /* Trial 2 */
+    /*
+    pitchGeometry.push_back(make_tuple(0,1));
+    pitchGeometry.push_back(make_tuple(0,2));
+    pitchGeometry.push_back(make_tuple(1,3));
+    pitchGeometry.push_back(make_tuple(1,5));
+    pitchGeometry.push_back(make_tuple(2,7));
+    pitchGeometry.push_back(make_tuple(4,7.5));
+    pitchGeometry.push_back(make_tuple(3,9));
+    */
+    /* Trial 3 */
+    pitchGeometry.push_back(make_tuple(0,2));
+    pitchGeometry.push_back(make_tuple(0,3));
+    pitchGeometry.push_back(make_tuple(1,4));
+    pitchGeometry.push_back(make_tuple(2,5));
+    pitchGeometry.push_back(make_tuple(2,4));
+    pitchGeometry.push_back(make_tuple(1,6));
+    pitchGeometry.push_back(make_tuple(2,7));
 
     //get the length of the live rope from the geometry
     //once this works, move and use to make the segment list
