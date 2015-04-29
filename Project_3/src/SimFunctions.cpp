@@ -114,15 +114,17 @@ Eigen::MatrixXd SimFunctions::createC(Pitch& p)
 
 
 
-    mainD[0] = (-1-Ei[0])/(p.Li[0]-Si[0]);
-    upperD[0] = (1+Ei[0])/(p.Li[0]-Si[0]);
+   // mainD[0] = (-1-Ei[0])/(p.Li[0]-Si[0]);
+   // upperD[0] = (1+Ei[0])/(p.Li[0]-Si[0]);
 
     for(std::size_t i = 1; i < s; ++i)
     {
-        mainD[i] = (-1-Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
-        upperD[i] = (1+Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+        mainD[i-1] = (-1-Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
+        upperD[i-1] = (1+Ei[i])/(p.Li[i]+Si[i-1]-Si[i]);
         //std::cout <<(-1-Ei[i])<<'\n';
     }
+    mainD[s-1] = (-1-Ei[s-1])/(p.getd()+Si[s-2]);
+    upperD[s-1] = (1)/(p.getd()+Si[s-2]);
 
     Eigen::MatrixXd ret(s,s+1);
     ret = Eigen::MatrixXd::Zero(s, s+1);
@@ -143,23 +145,32 @@ Eigen::MatrixXd SimFunctions::createL(Pitch& p)
     upperD = Eigen::VectorXd::Zero(s-1); //??
 
     //case for 0 spot: uhm...
+
     if(Ti[0] >= critValue){
         mainD[0] = 1;
         //upperD[0] = -1/tensionRatios[0];
 
     } //else slip is 0, do nothing
-
     for(std::size_t i = 1; i < s-1; i++)
     {
             //std::cout << "BLEH 1" << std::endl;
             //std::cout << ((Ti[i+1])/(tensionRatios[i])) << std::endl;
             //std::cout << "BLEH 2" << std::endl;
             //std::cout << ((Ti[i+1])*(tensionRatios[i])) << std::endl;
-        if(Ti[i] >= ((Ti[i+1])/(tensionRatios[i]))){
+        /*if(Ti[i] == ((Ti[i+1])/(tensionRatios[i]))){
             mainD[i] = 1;
             upperD[i] = -1/tensionRatios[i];
 
-        } else if(Ti[i] <= ((Ti[i+1])*(tensionRatios[i]))){
+        } else if(Ti[i] == ((Ti[i+1])*(tensionRatios[i]))){
+            mainD[i] = -1;
+            upperD[i] = -1*tensionRatios[i];
+        } //else { between, do nothing}*/
+
+        if(Si[i] < 0){
+            mainD[i] = 1;
+            upperD[i] = -1/tensionRatios[i];
+
+        } else if(Si[i] > 0){
             mainD[i] = -1;
             upperD[i] = -1*tensionRatios[i];
         } //else { between, do nothing}
@@ -197,7 +208,7 @@ Eigen::VectorXd SimFunctions::createDelT0(Pitch& p)
 
     //set delT0??
     //delT0 = ret;
-
+    delT0 = ret;
     return ret;
 }
 
@@ -234,7 +245,9 @@ void SimFunctions::incrementTi(Eigen::VectorXd v)
 double SimFunctions::calcNewVelocity(double v, Pitch& p)
 {
     if(Ti.rows() > 0)
-        return v + (G-(Ti[Ti.rows()-1])/p.getM())*tInc;
+        return v + (G-(1000*(Ti[Ti.rows()-1])/p.getM()))*tInc;
+        //return (G-(Ti[Ti.rows()-1])/p.getM())*tInc;
+        //return v + (G-(Ti[Ti.rows()-1])/p.getM());
     else{
     std::cout << "Error" << std::endl;
       return 0;

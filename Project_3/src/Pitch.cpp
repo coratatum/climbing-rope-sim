@@ -21,8 +21,12 @@ Pitch::Pitch()
     //implicit belay at 0,0
     pitchGeometry.push_back(make_tuple(0,1));
     pitchGeometry.push_back(make_tuple(0,2));
-    pitchGeometry.push_back(make_tuple(0,3)); //last is climber
-    pitchGeometry.push_back(make_tuple(5,4));
+    pitchGeometry.push_back(make_tuple(0,3));
+    pitchGeometry.push_back(make_tuple(0,4));
+    //pitchGeometry.push_back(make_tuple(1,4));
+    //pitchGeometry.push_back(make_tuple(1,2));
+    //pitchGeometry.push_back(make_tuple(2,4));
+    //pitchGeometry.push_back(make_tuple(2,5));
 
     //get the length of the live rope from the geometry
     //once this works, move and use to make the segment list
